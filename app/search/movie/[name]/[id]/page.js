@@ -5,11 +5,13 @@ import { use } from "react";
 import { OMDB_apiKey } from "@/config";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
+import useTVInfo from "@/hooks/UseTVInfo";
 
 export default function SearchMovie({ params }) {
-  const { name } = use(params);
+  const { name,id } = use(params);
   const [movieIMDB, setMovieIMDB] = useState("");
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  
 
   const getImdb = async () => {
     const response = await axios.get(
@@ -40,8 +42,9 @@ export default function SearchMovie({ params }) {
             className={`w-full h-[70vh] rounded-lg transition-opacity duration-300 ${
               iframeLoaded ? "visible" : "hidden"
             }`}
-            // src={`https://multiembed.mov/?video_id=${movieIMDB}&s=1&e=1`}
-            src={`https://www.NontonGo.win/embed/tv/${movieIMDB}/1/1`}
+            // src={`https://multiembed.mov/?video_id=${movieIMDB}`}
+            // src={`https://vidsrc.to/embed/movie/${movieIMDB}`}
+            src={`https://www.NontonGo.win/embed/movie/${movieIMDB}`}
             onLoad={handleIframeLoad}
             allow="fullscreen"
             allowFullScreen={true}

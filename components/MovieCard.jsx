@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 export default function MovieCard({ movie }) {
-  const { overview, release_date, title, poster_path, name } = movie;
+  
+  const { id, title, poster_path, name } = movie;
   const router = useRouter();
 
   const handleClick = (e) => {
-    if (name) router.push(`/search/tv/${encodeURIComponent(e)}`);
-    else router.push(`/search/movie/${encodeURIComponent(e)}`);
+    if (name) router.push(`/search/tv/${encodeURIComponent(e)}/${id}`);
+    else router.push(`/search/movie/${encodeURIComponent(e)}/${id}`);
   };
 
   const imageLoader = ({ path }) => {
