@@ -40,7 +40,8 @@ export default function SearchMovie({ params }) {
             className={`w-full h-[70vh] rounded-lg transition-opacity duration-300 ${
               iframeLoaded ? "visible" : "hidden"
             }`}
-            src={`https://multiembed.mov/?video_id=${movieIMDB}&s=1&e=1`}
+            // src={`https://multiembed.mov/?video_id=${movieIMDB}&s=1&e=1`}
+            src={`https://www.NontonGo.win/embed/tv/${movieIMDB}/1/1`}
             onLoad={handleIframeLoad}
             allow="fullscreen"
             allowFullScreen={true}
