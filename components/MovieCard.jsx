@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function MovieCard({ movie }) {
   const { original_title, overview, release_date, title, poster_path, name } =
@@ -13,16 +14,23 @@ export default function MovieCard({ movie }) {
     else router.push(`/search/movie/${encodeURIComponent(e)}`);
   };
 
-  if(!poster_path) return 
+  const imageLoader = ({path}) =>{
+    return `https://image.tmdb.org/t/p/w500${poster_path}`
+  }
+
+  if (!poster_path) return;
 
   return (
     <div
       className="cursor-pointer hover:scale-[1.05] transition-all"
       onClick={() => handleClick(title ? title : name)}
     >
-      <img
+      <Image
+        loader={imageLoader}
+        src={poster_path}
         className="rounded-xl h-[20em]"
-        src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+        width={200}
+        height={500}
         alt={title ? title : name}
       />
     </div>
