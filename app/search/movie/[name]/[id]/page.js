@@ -43,8 +43,8 @@ export default function SearchMovie({ params }) {
               iframeLoaded ? "visible" : "hidden"
             }`}
             // src={`https://multiembed.mov/?video_id=${movieIMDB}`}
-            // src={`https://vidsrc.to/embed/movie/${movieIMDB}`}
-            src={`https://www.NontonGo.win/embed/movie/${movieIMDB}`}
+            src={`https://vidsrc.to/embed/movie/${movieIMDB}`}
+            // src={`https://www.NontonGo.win/embed/movie/${movieIMDB}`}
             onLoad={handleIframeLoad}
             allow="fullscreen"
             allowFullScreen={true}
