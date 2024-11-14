@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { use } from "react";
 import { OMDB_apiKey } from "@/config";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -15,28 +14,50 @@ import {
 } from "@/components/ui/select";
 
 export default function SearchMovie({ params }) {
-  const { name, id } = use(params);
+  const [query, setQuery] = useState({
+    name: "",
+    id: "",
+  });
   const [movieIMDB, setMovieIMDB] = useState("");
   const [iframeLoaded, setIframeLoaded] = useState(false);
-  const { list, loading, error } = useTVInfo(id);
-  console.log(list);
-
+  const { list, loading, error } = useTVInfo(query.id);
   const [current, setCurrent] = useState({
     season: 1,
     episode: 1,
   });
 
+  const getLinks = [
+    `https://multiembed.mov/?video_id=${movieIMDB}&s=${current.season}&e=${current.episode}`,
+    `https://www.NontonGo.win/embed/tv/${movieIMDB}/${current.season}/${current.episode}`,
+    `https://vidsrc.to/embed/tv/${movieIMDB}/${current.season}/${current.episode}`,
+  ];
+
+  const [link, setLink] = useState("");
+
   useEffect(() => {
     const getImdb = async () => {
-      const response = await axios.get(
-        `https://www.omdbapi.com/?apikey=${OMDB_apiKey}&t=${decodeURIComponent(
-          name
-        )}`
-      );
-      setMovieIMDB(response.data.imdbID);
+      const { name, id } = await params;
+      setQuery((el) => ({ name: name, id: id }));
+      try {
+        const response = await axios.get(
+          `https://www.omdbapi.com/?apikey=${OMDB_apiKey}&t=${decodeURIComponent(
+            name
+          )}`
+        );
+        setMovieIMDB(response.data.imdbID);
+      } catch (error) {
+        console.error("Failed to fetch IMDb ID:", error);
+      }
     };
     getImdb();
-  }, [name]);
+    setLink(() => {
+      getLinks[0];
+    });
+  }, []);
+
+  useEffect(() => {
+    setLink(getLinks[0]); // Update link when movieIMDB, season, or episode changes
+  }, [movieIMDB, current.season, current.episode]);
 
   const handleIframeLoad = () => {
     setIframeLoaded(true);
@@ -104,15 +125,25 @@ export default function SearchMovie({ params }) {
             className={`w-full h-[70vh] rounded-lg transition-opacity duration-300 ${
               iframeLoaded ? "visible" : "hidden"
             }`}
-            src={`https://multiembed.mov/?video_id=${movieIMDB}&s=${current.season}&e=${current.episode}`}
-            // src={`https://vidsrc.to/embed/tv/${movieIMDB}/${current.season}/${current.episode}`}
-            // src={`https://www.NontonGo.win/embed/tv/${movieIMDB}/${current.season}/${current.episode}`}
+            src={link}
             onLoad={handleIframeLoad}
             allow="fullscreen"
             allowFullScreen
             title="Movie Player"
           ></iframe>
         )}
+      </div>
+
+      <div className="flex gap-x-5 mt-5">
+        {getLinks.map((el, index) => (
+          <button
+            className="px-3 py-2 bg-red-500 rounded text-white"
+            key={index}
+            onClick={() => setLink(el)}
+          >
+            Link {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );

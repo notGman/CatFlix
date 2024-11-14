@@ -42,9 +42,9 @@ export default function SearchMovie({ params }) {
             className={`w-full h-[70vh] rounded-lg transition-opacity duration-300 ${
               iframeLoaded ? "visible" : "hidden"
             }`}
-            src={`https://multiembed.mov/?video_id=${movieIMDB}`}
+            // src={`https://multiembed.mov/?video_id=${movieIMDB}`}
             // src={`https://vidsrc.to/embed/movie/${movieIMDB}`}
-            // src={`https://www.NontonGo.win/embed/movie/${movieIMDB}`}
+            src={`https://www.NontonGo.win/embed/movie/${movieIMDB}`}
             onLoad={handleIframeLoad}
             allow="fullscreen"
             allowFullScreen={true}
