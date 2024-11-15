@@ -5,13 +5,8 @@ import { OMDB_apiKey } from "@/config";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
 import useTVInfo from "@/hooks/UseTVInfo";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { use } from "react";
 
 export default function SearchMovie({ params }) {
   const [query, setQuery] = useState({
@@ -20,7 +15,8 @@ export default function SearchMovie({ params }) {
   });
   const [movieIMDB, setMovieIMDB] = useState("");
   const [iframeLoaded, setIframeLoaded] = useState(false);
-  const { list, loading, error } = useTVInfo(query.id);
+  const { id } = use(params);
+  const { list, loading, error } = useTVInfo(id);
   const [current, setCurrent] = useState({
     season: 1,
     episode: 1,
@@ -39,11 +35,7 @@ export default function SearchMovie({ params }) {
       const { name, id } = await params;
       setQuery((el) => ({ name: name, id: id }));
       try {
-        const response = await axios.get(
-          `https://www.omdbapi.com/?apikey=${OMDB_apiKey}&t=${decodeURIComponent(
-            name
-          )}`
-        );
+        const response = await axios.get(`https://www.omdbapi.com/?apikey=${OMDB_apiKey}&t=${decodeURIComponent(name)}`);
         setMovieIMDB(response.data.imdbID);
       } catch (error) {
         console.error("Failed to fetch IMDb ID:", error);
@@ -56,7 +48,7 @@ export default function SearchMovie({ params }) {
   }, []);
 
   useEffect(() => {
-    setLink(getLinks[0]); // Update link when movieIMDB, season, or episode changes
+    setLink(getLinks[0]);
   }, [movieIMDB, current.season, current.episode]);
 
   const handleIframeLoad = () => {
@@ -65,9 +57,9 @@ export default function SearchMovie({ params }) {
 
   return (
     <div>
-      <div className="text-xl font-bold mb-4 flex justify-between items-center">
-        <div>{decodeURIComponent(name)}</div>
-        <div className="flex justify-center items-center gap-x-6">
+      <div className="text-xl font-bold mb-4 flex flex-col md:flex-row justify-between items-center">
+        <div>{decodeURIComponent(query.name)}</div>
+        <div className="flex flex-col md:flex-row gap-y-3 mt-3 justify-center items-center gap-x-6">
           <Select
             onValueChange={(value) =>
               setCurrent((prev) => ({
@@ -89,22 +81,14 @@ export default function SearchMovie({ params }) {
             </SelectContent>
           </Select>
 
-          {/* Episode Selector */}
-          <Select
-            onValueChange={(value) =>
-              setCurrent((prev) => ({ ...prev, episode: Number(value) }))
-            }
-          >
+          <Select onValueChange={(value) => setCurrent((prev) => ({ ...prev, episode: Number(value) }))}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder={`Episode ${current.episode}`} />
             </SelectTrigger>
             <SelectContent>
               {Array.from(
                 {
-                  length:
-                    list.seasons?.find(
-                      (season) => season.season_number === current.season
-                    )?.episode_count || 0,
+                  length: list.seasons?.find((season) => season.season_number === current.season)?.episode_count || 0,
                 },
                 (_, index) => (
                   <SelectItem key={index + 1} value={index + 1}>
@@ -117,14 +101,12 @@ export default function SearchMovie({ params }) {
         </div>
       </div>
 
-      <div className="w-full mt-10 relative rounded-lg overflow-hidden">
+      <div className="w-full mt-6 relative rounded-lg overflow-hidden">
         {!iframeLoaded && <Skeleton className="w-full h-[70vh] rounded-lg" />}
 
         {movieIMDB && (
           <iframe
-            className={`w-full h-[70vh] rounded-lg transition-opacity duration-300 ${
-              iframeLoaded ? "visible" : "hidden"
-            }`}
+            className={`w-full h-[70vh] rounded-lg transition-opacity duration-300 ${iframeLoaded ? "visible" : "hidden"}`}
             src={link}
             onLoad={handleIframeLoad}
             allow="fullscreen"
@@ -134,14 +116,10 @@ export default function SearchMovie({ params }) {
         )}
       </div>
 
-      <div className="flex gap-x-5 mt-5">
+      <div className="flex gap-x-5 my-5">
         {getLinks.map((el, index) => (
-          <button
-            className="px-3 py-2 bg-red-500 rounded text-white"
-            key={index}
-            onClick={() => setLink(el)}
-          >
-            Link {index + 1}
+          <button className="w-8 h-8 bg-[#D81F26] rounded-full text-white text-md font-bold" key={index} onClick={() => setLink(el)}>
+            {index + 1}
           </button>
         ))}
       </div>

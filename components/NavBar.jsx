@@ -17,11 +17,11 @@ export default function NavBar() {
   }
 
   return (
-    <div className="flex justify-between my-10">
+    <div className="flex flex-col md:flex-row items-center justify-between my-10">
       <Link href="/" className="font-bold text-2xl">
         <Image src={"/logo.png"} width={150} height={53} alt="CatFlix"/>
       </Link>
-      <div className="flex w-full max-w-sm items-center space-x-2">
+      <div className="flex mt-5 md:mt-0 w-full max-w-sm items-center space-x-2">
         <Input ref={input} type="text" placeholder="Search" />
         <Button onClick={handleClick} type="submit">Search</Button>
       </div>

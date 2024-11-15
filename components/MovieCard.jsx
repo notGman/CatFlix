@@ -29,7 +29,7 @@ export default function MovieCard({ movie }) {
         loader={imageLoader}
         src={poster_path}
         className="rounded-sm"
-        width={150}
+        width={100}
         height={100}
         alt={title ? title : name}
         quality={10}

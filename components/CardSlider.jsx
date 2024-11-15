@@ -14,7 +14,7 @@ export default function CardSlider({ type, field }) {
 
   return (
     <div className="my-10">
-      <div className="capitalize text-2xl font-bold mb-5">
+      <div className="capitalize md:text-2xl font-bold mb-5">
         {String(field).replace("_", " ")} in {type}
       </div>
       <ScrollArea className="w-full whitespace-nowrap overflow-hidden rounded-md border">

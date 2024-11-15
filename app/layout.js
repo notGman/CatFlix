@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favico.png" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased mx-[15%]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased mx-3 md:mx-[15%]`}
       >
         <NavBar />
         {children}
