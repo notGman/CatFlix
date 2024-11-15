@@ -23,8 +23,8 @@ export default function SearchMovie({ params }) {
   });
 
   const getLinks = [
-    `https://multiembed.mov/?video_id=${movieIMDB}&s=${current.season}&e=${current.episode}`,
     `https://www.NontonGo.win/embed/tv/${movieIMDB}/${current.season}/${current.episode}`,
+    `https://multiembed.mov/?video_id=${movieIMDB}&s=${current.season}&e=${current.episode}`,
     `https://vidsrc.to/embed/tv/${movieIMDB}/${current.season}/${current.episode}`,
   ];
 
@@ -109,10 +109,10 @@ export default function SearchMovie({ params }) {
             className={`w-full h-[70vh] rounded-lg transition-opacity duration-300 ${iframeLoaded ? "visible" : "hidden"}`}
             src={link}
             onLoad={handleIframeLoad}
-            allow="fullscreen"
-            allowFullScreen
+            allow="fullscreen; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
             title="Movie Player"
-          ></iframe>
+          />
         )}
       </div>
 

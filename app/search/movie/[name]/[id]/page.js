@@ -13,7 +13,7 @@ export default function SearchMovie({ params }) {
   const [movieIMDB, setMovieIMDB] = useState("");
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
-  const getLinks = [`https://multiembed.mov/?video_id=${movieIMDB}`, `https://www.NontonGo.win/embed/movie/${movieIMDB}`, `https://vidsrc.to/embed/movie/${movieIMDB}`];
+  const getLinks = [`https://www.NontonGo.win/embed/movie/${movieIMDB}`, `https://multiembed.mov/?video_id=${movieIMDB}`, `https://vidsrc.to/embed/movie/${movieIMDB}`];
 
   const [link, setLink] = useState("");
 
