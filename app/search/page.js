@@ -7,7 +7,7 @@ import { TMDB_apiKey } from "@/config";
 import axios from "axios";
 import MovieCard from "@/components/MovieCard";
 
-export default function page() {
+export default function Page() {
   const [data, setData] = useState("");
   const [list, setList] = useState([]);
 
