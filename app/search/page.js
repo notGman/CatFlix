@@ -41,8 +41,8 @@ export default function Page() {
         <Input onChange={(e) => setData(e.target.value)} type="text" placeholder="Search for Movie, TV Series, anime ..." className="text- py-5 w-full md:max-w-[50%] mx-auto focus-visible:ring-0" />
       </div>
       <div>
-        {data.length >= 3 ? <div className="text-2xl font-bold hidden md:flex">Results</div> : ""}
-        <div className="flex flex-wrap justify-center items-center md:items-start gap-5 my-10">
+        {/* {data.length >= 3 ? <div className="text-2xl font-bold hidden md:flex">Results</div> : ""} */}
+        <div className="md:flex md:flex-wrap lg:grid grid-cols-7 justify-center items-center md:items-start gap-5 my-10">
           {(data.length >= 3) & (list.length === 0) ? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />) : list?.map((movie, index) => <MovieCard key={index} movie={movie} />)}
         </div>
       </div>

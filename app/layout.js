@@ -2,6 +2,7 @@ import "./globals.css";
 import AppSidebar from "@/components/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Head from "next/head";
+import Image from "next/image";
 
 export const metadata = {
   title: "CatFlix",
@@ -22,7 +23,10 @@ export default function RootLayout({ children }) {
       <body>
         <SidebarProvider defaultOpen={false}>
           <AppSidebar />
-          <div className="w-full p-2 md:py-8 md:pl-20">{children}</div>
+          <div className="w-full p-2 md:py-8 md:pl-20">
+            <Image src={"/logo.png"} width={150} height={53} alt="CatFlix" className="mx-auto md:mx-0 w-[5em] my-5 md:my-0 md:w-[150px]"/>
+            {children}
+          </div>
         </SidebarProvider>
       </body>
     </html>
