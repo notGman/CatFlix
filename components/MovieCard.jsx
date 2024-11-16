@@ -18,14 +18,12 @@ export default function MovieCard({ movie }) {
 
   return (
     <div
-      className="relative cursor-pointer hover:scale-[1.05] transition-all"
+      className="relative cursor-pointer hover:scale-[1.05] transition-all h-[17em] w-[11em]"
       onClick={() => handleClick(title ? title : name)}
       style={{
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "17em",
-        width: "11em",
       }}
     >
       <div className="absolute bottom-0 left-0 w-full h-4/5 bg-gradient-to-t from-black to-transparent" />

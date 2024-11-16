@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
       <body>
         <SidebarProvider defaultOpen={false}>
           <AppSidebar />
-          <div className="w-full px-2 md:py-8 md:px-20">{children}</div>
+          <div className="w-full p-2 md:py-8 md:pl-20">{children}</div>
         </SidebarProvider>
       </body>
     </html>
