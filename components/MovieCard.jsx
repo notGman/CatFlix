@@ -18,7 +18,7 @@ export default function MovieCard({ movie }) {
 
   return (
     <div
-      className="relative cursor-pointer hover:scale-[1.05] transition-all h-[17em] w-[11em]"
+      className="relative cursor-pointer hover:scale-[1.02] transition-all h-[210px] w-[135px]"
       onClick={() => handleClick(title ? title : name)}
       style={{
         backgroundImage: `url(${imageUrl})`,
@@ -27,10 +27,10 @@ export default function MovieCard({ movie }) {
       }}
     >
       <div className="absolute bottom-0 left-0 w-full h-4/5 bg-gradient-to-t from-black to-transparent" />
-      <div className="absolute top-3/4 left-0 w-full p-2 break-all text-white">
+      <div className="absolute top-3/4 left-0 w-full px-1 break-all text-white">
         <div className="flex flex-wrap gap-x-1 leading-5">
           {(title || name || "").split(" ").map((word, index) => (
-            <div key={index} className="text-sm text-zinc-300">
+            <div key={index} className="text-xs text-zinc-300">
               {word}
             </div>
           ))}

@@ -16,6 +16,7 @@ export default function SearchMovie({ params }) {
   const getLinks = [`https://www.NontonGo.win/embed/movie/${movieIMDB}`, `https://multiembed.mov/?video_id=${movieIMDB}`, `https://vidsrc.to/embed/movie/${movieIMDB}`];
 
   const [link, setLink] = useState("");
+  const [selectedLink, setSelectedLink] = useState(0); // Track the selected button
 
   useEffect(() => {
     const getImdb = async () => {
@@ -42,13 +43,18 @@ export default function SearchMovie({ params }) {
     setIframeLoaded(true);
   };
 
+  const handleLinkClick = (index) => {
+    setLink(getLinks[index]);
+    setSelectedLink(index); // Set the selected index
+  };
+
   return (
     <div>
-      <div className="text-xl font-bold mb-4 flex justify-between items-center">
+      <div className="text-lg mb-4 mt-6 flex justify-between items-center">
         <div>{decodeURIComponent(query.name)}</div>
       </div>
 
-      <div className="w-full mt-10 relative rounded-lg overflow-hidden">
+      <div className="w-full mb-5 relative rounded-lg overflow-hidden">
         {!iframeLoaded && <Skeleton className="w-full h-[70vh] rounded-lg" />}
 
         {movieIMDB && (
@@ -63,9 +69,13 @@ export default function SearchMovie({ params }) {
         )}
       </div>
 
-      <div className="flex items-center gap-x-5 my-5">
+      <div className="flex items-center gap-x-5">
         {getLinks.map((el, index) => (
-          <button className="w-8 h-8 bg-[#D81F26] rounded-full text-white text-md font-bold" key={index} onClick={() => setLink(el)}>
+          <button
+            key={index}
+            className={`w-8 h-8 border-2  rounded-full text-center py-auto text-sm font-bold ${selectedLink === index ? "border-red-500 text-white" : "text-zinc-400 border-zinc-700"}`}
+            onClick={() => handleLinkClick(index)}
+          >
             {index + 1}
           </button>
         ))}

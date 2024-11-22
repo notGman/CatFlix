@@ -7,8 +7,7 @@ import { TMDB_apiKey } from "@/config";
 import axios from "axios";
 import MovieCard from "@/components/MovieCard";
 
-export default function Page() {
-  const [data, setData] = useState("");
+export default function SearchPage({ searchQuery }) {
   const [list, setList] = useState([]);
 
   const getImdb = async () => {
@@ -19,15 +18,15 @@ export default function Page() {
         Authorization: `Bearer ${TMDB_apiKey}`,
       },
     };
-    const response = await axios.get(`https://api.themoviedb.org/3/search/multi?query=${data}&include_adult=false&language=en-US&page=1`, options);
+    const response = await axios.get(`https://api.themoviedb.org/3/search/multi?query=${searchQuery}&include_adult=false&language=en-US&page=1`, options);
     console.log(response);
 
     setList(response.data.results);
   };
 
   useEffect(() => {
-    if (data.length >= 3) getImdb();
-  }, [data]);
+    if (searchQuery) getImdb();
+  }, [searchQuery]);
 
   const SkeletonCard = () => (
     <div className="shrink-0">
@@ -40,7 +39,9 @@ export default function Page() {
       <div>
         {/* {data.length >= 3 ? <div className="text-2xl font-bold hidden md:flex">Results</div> : ""} */}
         <div className="md:flex md:flex-wrap lg:grid grid-cols-7 justify-center items-center md:items-start gap-5 my-10">
-          {(data.length >= 3) & (list.length === 0) ? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />) : list?.map((movie, index) => <MovieCard key={index} movie={movie} />)}
+          {(searchQuery.length >= 3) & (list.length === 0)
+            ? Array.from({ length: 5 }).map((_, index) => <SkeletonCard key={index} />)
+            : list?.map((movie, index) => <MovieCard key={index} movie={movie} />)}
         </div>
       </div>
     </>

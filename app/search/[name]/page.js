@@ -6,6 +6,7 @@ import { TMDB_apiKey } from "@/config";
 import axios from "axios";
 import MovieCard from "@/components/MovieCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import NavBar from "@/components/Navbar";
 
 export default function Search({ params }) {
   const { name } = use(params);
@@ -19,10 +20,7 @@ export default function Search({ params }) {
         Authorization: `Bearer ${TMDB_apiKey}`,
       },
     };
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/search/multi?query=${name}&include_adult=false&language=en-US&page=1`,
-      options
-    );
+    const response = await axios.get(`https://api.themoviedb.org/3/search/multi?query=${name}&include_adult=false&language=en-US&page=1`, options);
     setList(response.data.results);
   };
 
@@ -32,23 +30,15 @@ export default function Search({ params }) {
 
   const SkeletonCard = () => (
     <div className="shrink-0">
-      <Skeleton className="h-[220px] w-[150px] rounded-xl" />
+      <Skeleton className="h-[210px] w-[135px] rounded-xl" />
     </div>
   );
 
   return (
-    <div>
-      <div className="text-2xl font-bold mb-10">Results for {decodeURIComponent(name)}</div>
-      <div className="grid grid-cols-7 gap-5 mb-10">
-        {list.length === 0 ? (
-          Array.from({ length: 4 }).map((_, index) => (
-            <SkeletonCard key={index} />
-          ))
-        ) : (
-          list?.map((movie, index) => (
-            <MovieCard key={index} movie={movie} />
-          ))
-        )}
+    <div className="mt-10 mb-6">
+      {/* <div className="text-2xl font-bold mb-10">Results for {decodeURIComponent(name)}</div> */}
+      <div className="grid grid-cols-6 gap-y-3">
+        {list.length === 0 ? Array.from({ length: 4 }).map((_, index) => <SkeletonCard key={index} />) : list?.map((movie, index) => <MovieCard key={index} movie={movie} />)}
       </div>
     </div>
   );
