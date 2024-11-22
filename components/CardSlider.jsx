@@ -17,7 +17,7 @@ export default function CardSlider({ type, field }) {
       <div className="flex items-center gap-x-3 mb-3">
         <div className="bg-[#E52B12] h-8 w-[5px]"></div>
         <div className="capitalize md:text-lg">
-          {String(field).replace("_", " ")} in {type}
+        {String(field).includes("/") ? "" : `${String(field).replace("_", " ")} in`} {type}
         </div>
       </div>
       <ScrollArea className="w-full whitespace-nowrap overflow-hidden rounded-none border">
@@ -30,7 +30,7 @@ export default function CardSlider({ type, field }) {
                 </figure>
               ))}
         </div>
-        <ScrollBar orientation="horizontal" className="h-[8px]"/>
+        <ScrollBar orientation="horizontal" className="h-[8px]" />
       </ScrollArea>
     </div>
   );
